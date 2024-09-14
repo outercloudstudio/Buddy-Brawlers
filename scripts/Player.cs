@@ -105,13 +105,14 @@ public partial class Player : CharacterBody3D, NetworkPointUser
 		_flipOrigin.Scale = new Vector3(1, 1, _lastMovedRight ? 1 : -1);
 	}
 
-	public void Damage(Vector3 knockback)
+	public void Damage(Vector3 knockback, float lift)
 	{
 		NetworkPoint.BounceRpcToClients(nameof(DamageRpc), message =>
 		{
 			message.AddFloat(knockback.X);
 			message.AddFloat(knockback.Y);
 			message.AddFloat(knockback.Z);
+			message.AddFloat(lift);
 		});
 	}
 
@@ -141,7 +142,7 @@ public partial class Player : CharacterBody3D, NetworkPointUser
 
 			playerOffset = playerOffset.Normalized();
 
-			otherPlayer.Damage(playerOffset * 7f + Vector3.Up * 5f);
+			otherPlayer.Damage(playerOffset * 7f + Vector3.Up * 5f, 7f);
 		}
 	}
 
@@ -161,7 +162,7 @@ public partial class Player : CharacterBody3D, NetworkPointUser
 
 			playerOffset = playerOffset.Normalized();
 
-			otherPlayer.Damage(playerOffset * 7f + Vector3.Up * 5f);
+			otherPlayer.Damage(playerOffset * 7f, 5f);
 		}
 	}
 
@@ -200,5 +201,7 @@ public partial class Player : CharacterBody3D, NetworkPointUser
 		Vector3 knockback = new Vector3(message.GetFloat(), message.GetFloat(), message.GetFloat());
 
 		_knockback = knockback;
+
+		_yVelocity = message.GetFloat();
 	}
 }
