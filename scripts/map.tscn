@@ -1,0 +1,18 @@
+[gd_scene format=3 uid="uid://n0wb5i1cdyte"]
+
+[node name="Map" type="Node3D"]
+
+[node name="Environment" type="CSGCombiner3D" parent="."]
+use_collision = true
+
+[node name="CSGBox3D" type="CSGBox3D" parent="Environment"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.24408, 0)
+size = Vector3(1, 0.511841, 11.6768)
+
+[node name="CSGBox3D2" type="CSGBox3D" parent="Environment"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.545403, 1.73022)
+size = Vector3(1, 1.12285, 1.56689)
+
+[node name="CSGBox3D3" type="CSGBox3D" parent="Environment"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.86086, -1.94929)
+size = Vector3(1, 0.29287, 2.31226)
