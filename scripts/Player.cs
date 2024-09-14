@@ -162,7 +162,7 @@ public partial class Player : CharacterBody3D, NetworkPointUser
 
 			playerOffset = playerOffset.Normalized();
 
-			otherPlayer.Damage(playerOffset * 7f, 5f);
+			otherPlayer.Damage(playerOffset * 7f, 7f);
 		}
 	}
 

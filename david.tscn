@@ -107,8 +107,9 @@ node_connections = [&"output", 0, &"TurnBlendSpace"]
 
 [node name="David" type="CharacterBody3D"]
 collision_layer = 3
+axis_lock_linear_x = true
 script = ExtResource("1_jmk4b")
-Speed = 2.0
+Speed = 3.0
 Gravity = 30.0
 Jump = 12.0
 
