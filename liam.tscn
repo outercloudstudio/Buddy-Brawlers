@@ -1,0 +1,102 @@
+[gd_scene load_steps=12 format=3 uid="uid://dmuncf67xubb3"]
+
+[ext_resource type="Script" path="res://Player.cs" id="1_cu7h1"]
+[ext_resource type="PackedScene" uid="uid://dlk3iwvpb8uav" path="res://models/people/Liam.blend" id="3_jwaj7"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_f4dmj"]
+radius = 0.142789
+height = 1.26732
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_fuk2t"]
+animation = &"Idle"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_vdjbq"]
+animation = &"Normal"
+
+[sub_resource type="AnimationNodeOneShot" id="AnimationNodeOneShot_4kr13"]
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_k7g2b"]
+animation = &"Special"
+
+[sub_resource type="AnimationNodeOneShot" id="AnimationNodeOneShot_2wujr"]
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_rk4r6"]
+animation = &"Walk"
+
+[sub_resource type="AnimationNodeBlend2" id="AnimationNodeBlend2_x7w5f"]
+
+[sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_0v12t"]
+graph_offset = Vector2(-326.07, -123.347)
+nodes/IdleAnimation/node = SubResource("AnimationNodeAnimation_fuk2t")
+nodes/IdleAnimation/position = Vector2(-106.667, 53.3333)
+nodes/NormalAnimation/node = SubResource("AnimationNodeAnimation_vdjbq")
+nodes/NormalAnimation/position = Vector2(293.333, 320)
+nodes/NormalOneShot/node = SubResource("AnimationNodeOneShot_4kr13")
+nodes/NormalOneShot/position = Vector2(293.333, 53.3333)
+nodes/SpecialAnimation/node = SubResource("AnimationNodeAnimation_k7g2b")
+nodes/SpecialAnimation/position = Vector2(533.333, 293.333)
+nodes/SpecialOneShot/node = SubResource("AnimationNodeOneShot_2wujr")
+nodes/SpecialOneShot/position = Vector2(533.333, 53.3333)
+nodes/WalkAnimation/node = SubResource("AnimationNodeAnimation_rk4r6")
+nodes/WalkAnimation/position = Vector2(-106.667, 213.333)
+nodes/WalkBlend/node = SubResource("AnimationNodeBlend2_x7w5f")
+nodes/WalkBlend/position = Vector2(106.667, 106.667)
+nodes/output/position = Vector2(773.333, 53.3333)
+node_connections = [&"NormalOneShot", 0, &"WalkBlend", &"NormalOneShot", 1, &"NormalAnimation", &"SpecialOneShot", 0, &"NormalOneShot", &"SpecialOneShot", 1, &"SpecialAnimation", &"WalkBlend", 0, &"IdleAnimation", &"WalkBlend", 1, &"WalkAnimation", &"output", 0, &"SpecialOneShot"]
+
+[node name="Liam" type="CharacterBody3D"]
+script = ExtResource("1_cu7h1")
+Speed = 4.0
+Gravity = 30.0
+Jump = 10.0
+
+[node name="Model" parent="." instance=ExtResource("3_jwaj7")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.101487, 0)
+
+[node name="Liam" parent="Model" index="0"]
+transform = Transform3D(0.727756, 0.0519485, -0.683866, 0.00175514, 0.996983, 0.0776016, 0.685834, -0.0576753, 0.725469, -0.0374012, -0.0729594, 0.0711741)
+
+[node name="Skeleton3D" parent="Model/Liam" index="0"]
+bones/1/rotation = Quaternion(-0.014046, 0.039679, -0.0160668, 0.998985)
+bones/2/rotation = Quaternion(0.023531, 0.0800847, -0.0222356, 0.996262)
+bones/3/rotation = Quaternion(0.102248, 0.0815404, -0.0160978, 0.991281)
+bones/4/rotation = Quaternion(0.192529, -0.00263852, 0.00101899, 0.981287)
+bones/5/rotation = Quaternion(-0.104202, -0.00251314, 0.00129776, 0.994552)
+bones/6/rotation = Quaternion(-0.103058, -0.00271204, 0.000802924, 0.994671)
+bones/8/rotation = Quaternion(-0.594944, -0.346017, -0.363306, 0.627951)
+bones/9/rotation = Quaternion(-0.254272, 0.557029, -0.58907, 0.527314)
+bones/10/rotation = Quaternion(0.405071, 0.0884503, 0.00898536, 0.909953)
+bones/11/rotation = Quaternion(0.0123561, 0.132296, 0.163002, 0.977638)
+bones/13/rotation = Quaternion(-0.570715, 0.38175, 0.418425, 0.594535)
+bones/14/rotation = Quaternion(-0.382464, -0.620755, 0.401497, 0.554243)
+bones/15/rotation = Quaternion(0.359135, -0.00301123, 0.0478322, 0.932054)
+bones/16/rotation = Quaternion(0.102992, -0.0566266, 0.104949, 0.987508)
+bones/18/rotation = Quaternion(-3.30072e-08, 0.696936, 0.717133, -3.14282e-08)
+bones/20/rotation = Quaternion(-3.30072e-08, 0.696936, 0.717133, -3.14282e-08)
+bones/26/rotation = Quaternion(0.929764, 0.0888203, -0.0940991, 0.344667)
+bones/27/rotation = Quaternion(0.366782, 0.12651, 0.0360084, 0.920961)
+bones/28/rotation = Quaternion(-0.585534, -0.0502094, 0.0220385, 0.808792)
+bones/29/rotation = Quaternion(-0.0542937, 0.954245, -0.293999, -0.00580152)
+bones/33/rotation = Quaternion(0.970482, -0.109414, 0.140447, 0.162687)
+bones/34/rotation = Quaternion(0.358607, 0.0666984, 0.0235597, 0.930804)
+bones/35/rotation = Quaternion(-0.678373, 0.0893091, -0.112105, 0.720602)
+bones/36/rotation = Quaternion(0.0178858, 0.956859, -0.289836, -0.00977819)
+bones/38/rotation = Quaternion(-0.665423, 0.693964, -0.19032, -0.198506)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.630975, 0)
+shape = SubResource("CapsuleShape3D_f4dmj")
+
+[node name="AnimationTree" type="AnimationTree" parent="."]
+root_node = NodePath("../Model")
+tree_root = SubResource("AnimationNodeBlendTree_0v12t")
+anim_player = NodePath("../Model/AnimationPlayer")
+parameters/NormalOneShot/active = false
+parameters/NormalOneShot/internal_active = false
+parameters/NormalOneShot/request = 0
+parameters/SpecialOneShot/active = false
+parameters/SpecialOneShot/internal_active = false
+parameters/SpecialOneShot/request = 0
+parameters/WalkBlend/blend_amount = 0.0
+
+[editable path="Model"]

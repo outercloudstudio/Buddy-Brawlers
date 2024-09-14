@@ -1,6 +1,7 @@
-[gd_scene load_steps=5 format=3 uid="uid://db0tr1ilko6mm"]
+[gd_scene load_steps=6 format=3 uid="uid://db0tr1ilko6mm"]
 
-[ext_resource type="PackedScene" uid="uid://dcdquivdxnwpf" path="res://models/people/david.tscn" id="1_o6was"]
+[ext_resource type="PackedScene" uid="uid://dcdquivdxnwpf" path="res://david.tscn" id="1_o6was"]
+[ext_resource type="PackedScene" uid="uid://dmuncf67xubb3" path="res://liam.tscn" id="2_cneqi"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_1v7er"]
 
@@ -39,8 +40,9 @@ size = Vector3(1, 0.29287, 2.31226)
 [node name="David" parent="." instance=ExtResource("1_o6was")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.358512, -0.0193324)
 Speed = 4.0
-Gravity = 30.0
-Jump = 10.0
 
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -4.84, 1.12, 0)
+
+[node name="Liam" parent="." instance=ExtResource("2_cneqi")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.075, -4.311)

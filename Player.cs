@@ -17,6 +17,12 @@ public partial class Player : CharacterBody3D
 		_animationTree = GetNode<AnimationTree>("AnimationTree");
 	}
 
+	public override void _Input(InputEvent @event)
+	{
+		if (@event.IsActionPressed("normal")) NormalAttack();
+		if (@event.IsActionPressed("special")) SpecialAttack();
+	}
+
 	public override void _PhysicsProcess(double delta)
 	{
 		float movement = Input.GetAxis("right", "left");
@@ -38,6 +44,16 @@ public partial class Player : CharacterBody3D
 
 	private void UpdateAnimationTree(float movement)
 	{
-		_animationTree.Set("parameters/walk_blend/blend_amount", movement != 0 ? 1 : 0);
+		_animationTree.Set("parameters/WalkBlend/blend_amount", movement != 0 ? 1 : 0);
+	}
+
+	private void NormalAttack()
+	{
+		_animationTree.Set("parameters/NormalOneShot/request", (int)AnimationNodeOneShot.OneShotRequest.Fire);
+	}
+
+	private void SpecialAttack()
+	{
+		_animationTree.Set("parameters/SpecialOneShot/request", (int)AnimationNodeOneShot.OneShotRequest.Fire);
 	}
 }
