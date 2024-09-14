@@ -67,7 +67,12 @@ public partial class Player : CharacterBody3D, NetworkPointUser
 
 		if (IsOnFloor() && _yVelocity < 0) _yVelocity = 0;
 
-		if (IsOnFloor() && Input.IsActionPressed("up")) _yVelocity = Jump;
+		if (IsOnFloor() && Input.IsActionPressed("up"))
+		{
+			_yVelocity = Jump;
+
+			_visualAnimationTree.Set("parameters/JumpOneShot/request", (int)AnimationNodeOneShot.OneShotRequest.Fire);
+		}
 
 		_networkedPosition.Sync();
 		_networkedVelocity.Sync();
@@ -115,6 +120,7 @@ public partial class Player : CharacterBody3D, NetworkPointUser
 		_visualAnimationTree.Set("parameters/WalkBlend/blend_amount", MathHelper.FixedLerp((float)_visualAnimationTree.Get("parameters/WalkBlend/blend_amount"), _movement != 0 ? 1 : 0, 8f, delta));
 		_visualAnimationTree.Set("parameters/NormalBlend/blend_amount", MathHelper.FixedLerp((float)_visualAnimationTree.Get("parameters/NormalBlend/blend_amount"), _animationPlayer.CurrentAnimation == "normal" && _animationPlayer.CurrentAnimationPosition > 0.1 && _animationPlayer.CurrentAnimationPosition < _animationPlayer.CurrentAnimationLength - 0.1 ? 1 : 0, 20f, delta));
 		_visualAnimationTree.Set("parameters/SpecialBlend/blend_amount", MathHelper.FixedLerp((float)_visualAnimationTree.Get("parameters/SpecialBlend/blend_amount"), _animationPlayer.CurrentAnimation == "special" && _animationPlayer.CurrentAnimationPosition > 0.1 && _animationPlayer.CurrentAnimationPosition < _animationPlayer.CurrentAnimationLength - 0.1 ? 1 : 0, 20f, delta));
+		_visualAnimationTree.Set("parameters/JumpBlend/blend_amount", MathHelper.FixedLerp((float)_visualAnimationTree.Get("parameters/JumpBlend/blend_amount"), !IsOnFloor() ? 1 : 0, 20f, delta));
 
 		_animationTree.Set("parameters/TurnBlendSpace/blend_position", MathHelper.FixedLerp((float)_animationTree.Get("parameters/TurnBlendSpace/blend_position"), _lastMovedRight ? 1 : -1, 12f, delta));
 	}
