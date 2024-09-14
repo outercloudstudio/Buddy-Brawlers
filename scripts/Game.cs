@@ -7,12 +7,16 @@ using System.Collections.Generic;
 
 public partial class Game : Node3D, NetworkPointUser
 {
+	private static Game s_Me;
+
 	[Export] public PackedScene[] Characters = new PackedScene[0];
 
 	public NetworkPoint NetworkPoint { get; set; } = new NetworkPoint();
 
 	public override void _Ready()
 	{
+		s_Me = this;
+
 		if (!SteamAPI.Init())
 		{
 			GD.PushError("SteamAPI.Init() failed!");
@@ -46,7 +50,7 @@ public partial class Game : Node3D, NetworkPointUser
 		SteamAPI.RunCallbacks();
 	}
 
-	private void Start()
+	public static void Start()
 	{
 		List<int> clientIds = new List<int>();
 
@@ -55,7 +59,7 @@ public partial class Game : Node3D, NetworkPointUser
 			clientIds.Add(connection.Id);
 		}
 
-		NetworkPoint.SendRpcToClients(nameof(StartRpc), message =>
+		s_Me.NetworkPoint.SendRpcToClients(nameof(StartRpc), message =>
 		{
 			message.AddInts(clientIds.ToArray());
 		});
