@@ -1,7 +1,9 @@
-[gd_scene load_steps=6 format=3 uid="uid://db0tr1ilko6mm"]
+[gd_scene load_steps=8 format=3 uid="uid://db0tr1ilko6mm"]
 
+[ext_resource type="Script" path="res://scripts/Game.cs" id="1_3825q"]
 [ext_resource type="PackedScene" uid="uid://dcdquivdxnwpf" path="res://david.tscn" id="1_o6was"]
 [ext_resource type="PackedScene" uid="uid://dmuncf67xubb3" path="res://liam.tscn" id="2_cneqi"]
+[ext_resource type="Script" path="res://scripts/networking/NetworkManager.cs" id="4_cc7sn"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_1v7er"]
 
@@ -13,6 +15,8 @@ background_mode = 2
 sky = SubResource("Sky_11iph")
 
 [node name="Main" type="Node3D"]
+script = ExtResource("1_3825q")
+Characters = [ExtResource("2_cneqi"), ExtResource("1_o6was")]
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(0.912077, 0.31377, -0.263938, 0, 0.643723, 0.765259, 0.410019, -0.697975, 0.587125, 0, 1.92892, 1.7353)
@@ -37,12 +41,8 @@ size = Vector3(1, 1.12285, 1.56689)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.86086, -1.94929)
 size = Vector3(1, 0.29287, 2.31226)
 
-[node name="David" parent="." instance=ExtResource("1_o6was")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.358512, -0.0193324)
-Speed = 4.0
-
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -4.84, 1.12, 0)
 
-[node name="Liam" parent="." instance=ExtResource("2_cneqi")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.075, -4.311)
+[node name="NetworkManager" type="Node" parent="."]
+script = ExtResource("4_cc7sn")

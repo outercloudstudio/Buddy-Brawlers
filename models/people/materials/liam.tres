@@ -1,0 +1,6 @@
+[gd_resource type="StandardMaterial3D" load_steps=2 format=3 uid="uid://dmeeatgxw8w1l"]
+
+[ext_resource type="Texture2D" uid="uid://dvtjp71gid71r" path="res://models/people/textures/liam_albedo.jpg" id="1_2vtm6"]
+
+[resource]
+albedo_texture = ExtResource("1_2vtm6")
