@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://dcdquivdxnwpf"]
+[gd_scene load_steps=19 format=3 uid="uid://dcdquivdxnwpf"]
 
 [ext_resource type="PackedScene" uid="uid://b7ntx4i82q2ya" path="res://models/people/David.blend" id="1_8fhee"]
 [ext_resource type="Script" path="res://scripts/Player.cs" id="1_jmk4b"]
@@ -49,6 +49,7 @@ size = Vector3(1, 0.893738, 0.933258)
 
 [sub_resource type="Animation" id="Animation_aq1ua"]
 resource_name = "normal"
+length = 0.8667
 tracks/0/type = "method"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -66,6 +67,7 @@ tracks/0/keys = {
 
 [sub_resource type="Animation" id="Animation_n3lw5"]
 resource_name = "special"
+length = 1.7
 tracks/0/type = "method"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -81,9 +83,59 @@ tracks/0/keys = {
 }]
 }
 
+[sub_resource type="Animation" id="Animation_itpiy"]
+resource_name = "right"
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Model:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_t5keb"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Model:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_lqb0k"]
+resource_name = "left"
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Model:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, -3.14159, 0)]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_ctvhm"]
 _data = {
+"RESET": SubResource("Animation_t5keb"),
+"left": SubResource("Animation_lqb0k"),
 "normal": SubResource("Animation_aq1ua"),
+"right": SubResource("Animation_itpiy"),
 "special": SubResource("Animation_n3lw5")
 }
 
