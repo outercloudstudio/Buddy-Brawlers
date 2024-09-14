@@ -18,6 +18,7 @@ public partial class Player : CharacterBody3D, NetworkPointUser
 	private float _yVelocity;
 	private Node3D _model;
 	private AnimationTree _animationTree;
+	private AnimationPlayer _moveAnimationPlayer;
 	private Node3D _flipOrigin;
 	private Area3D _attackArea;
 	private Vector3 _knockback;
@@ -26,6 +27,7 @@ public partial class Player : CharacterBody3D, NetworkPointUser
 	{
 		_model = GetNode<Node3D>("Model");
 		_animationTree = GetNode<AnimationTree>("AnimationTree");
+		_moveAnimationPlayer = GetNode<AnimationPlayer>("MoveAnimationPlayer");
 		_flipOrigin = GetNode<Node3D>("FlipOrigin");
 		_attackArea = _flipOrigin.GetNode<Area3D>("AttackArea");
 
@@ -108,10 +110,8 @@ public partial class Player : CharacterBody3D, NetworkPointUser
 		_animationTree.Set("parameters/WalkBlend/blend_amount", movement != 0 ? 1 : 0);
 	}
 
-	private void NormalAttack()
+	public virtual void TriggerNormalAttack()
 	{
-		NetworkPoint.BounceRpcToClientsFast(nameof(NormalAttackRpc));
-
 		var bodies = _attackArea.GetOverlappingBodies();
 
 		foreach (Node body in bodies)
@@ -130,10 +130,8 @@ public partial class Player : CharacterBody3D, NetworkPointUser
 		}
 	}
 
-	private void SpecialAttack()
+	public virtual void TriggerSpecialAttack()
 	{
-		NetworkPoint.BounceRpcToClientsFast(nameof(SpecialAttackRpc));
-
 		var bodies = _attackArea.GetOverlappingBodies();
 
 		foreach (Node body in bodies)
@@ -148,18 +146,34 @@ public partial class Player : CharacterBody3D, NetworkPointUser
 
 			playerOffset = playerOffset.Normalized();
 
-			otherPlayer.Damage(playerOffset * 7f + Vector3.Up * 10f);
+			otherPlayer.Damage(playerOffset * 7f + Vector3.Up * 5f);
 		}
+	}
+
+	private void NormalAttack()
+	{
+		NetworkPoint.BounceRpcToClientsFast(nameof(NormalAttackRpc));
+	}
+
+	private void SpecialAttack()
+	{
+		NetworkPoint.BounceRpcToClientsFast(nameof(SpecialAttackRpc));
 	}
 
 	private void NormalAttackRpc(Message message)
 	{
 		_animationTree.Set("parameters/NormalOneShot/request", (int)AnimationNodeOneShot.OneShotRequest.Fire);
+
+		_moveAnimationPlayer.Stop();
+		_moveAnimationPlayer.Play("normal");
 	}
 
 	private void SpecialAttackRpc(Message message)
 	{
 		_animationTree.Set("parameters/SpecialOneShot/request", (int)AnimationNodeOneShot.OneShotRequest.Fire);
+
+		_moveAnimationPlayer.Stop();
+		_moveAnimationPlayer.Play("special");
 	}
 
 	private void DamageRpc(Message message)
