@@ -1,0 +1,39 @@
+[gd_scene load_steps=5 format=3 uid="uid://db0tr1ilko6mm"]
+
+[ext_resource type="PackedScene" uid="uid://bpqwlsbfr6i2a" path="res://david.tscn" id="1_s1xbi"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_1v7er"]
+
+[sub_resource type="Sky" id="Sky_11iph"]
+sky_material = SubResource("ProceduralSkyMaterial_1v7er")
+
+[sub_resource type="Environment" id="Environment_hv5y0"]
+background_mode = 2
+sky = SubResource("Sky_11iph")
+
+[node name="Main" type="Node3D"]
+
+[node name="David" parent="." instance=ExtResource("1_s1xbi")]
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.912077, 0.31377, -0.263938, 0, 0.643723, 0.765259, 0.410019, -0.697975, 0.587125, 0, 1.92892, 1.7353)
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_hv5y0")
+
+[node name="Map" type="Node3D" parent="."]
+
+[node name="Environment" type="CSGCombiner3D" parent="Map"]
+use_collision = true
+
+[node name="CSGBox3D" type="CSGBox3D" parent="Map/Environment"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.24408, 0)
+size = Vector3(1, 0.511841, 11.6768)
+
+[node name="CSGBox3D2" type="CSGBox3D" parent="Map/Environment"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.545403, 1.73022)
+size = Vector3(1, 1.12285, 1.56689)
+
+[node name="CSGBox3D3" type="CSGBox3D" parent="Map/Environment"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.86086, -1.94929)
+size = Vector3(1, 0.29287, 2.31226)
