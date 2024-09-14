@@ -4,7 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://dcdquivdxnwpf" path="res://david.tscn" id="1_o6was"]
 [ext_resource type="PackedScene" uid="uid://dmuncf67xubb3" path="res://liam.tscn" id="2_cneqi"]
 [ext_resource type="Script" path="res://scripts/networking/NetworkManager.cs" id="4_cc7sn"]
-[ext_resource type="PackedScene" uid="uid://n0wb5i1cdyte" path="res://scripts/map.tscn" id="4_nnxfy"]
+[ext_resource type="PackedScene" uid="uid://n0wb5i1cdyte" path="res://map.tscn" id="4_nnxfy"]
 [ext_resource type="Script" path="res://scripts/MainMenu.cs" id="5_vftjj"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_1v7er"]
