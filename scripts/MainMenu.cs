@@ -22,7 +22,8 @@ public partial class MainMenu : Control
 
 	public void Host()
 	{
-		NetworkManager.Host();
+		// NetworkManager.Host();
+		NetworkManager.HostLocal();
 
 		JoinStuff.Visible = false;
 		LobbyStuff.Visible = true;
@@ -30,7 +31,8 @@ public partial class MainMenu : Control
 
 	public void Join()
 	{
-		SteamFriends.ActivateGameOverlay("friends");
+		// SteamFriends.ActivateGameOverlay("friends");
+		NetworkManager.JoinLocal();
 	}
 
 	public void Start()
