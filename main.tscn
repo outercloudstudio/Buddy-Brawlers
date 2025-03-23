@@ -1,11 +1,131 @@
-[gd_scene load_steps=10 format=3 uid="uid://db0tr1ilko6mm"]
+[gd_scene load_steps=35 format=3 uid="uid://db0tr1ilko6mm"]
 
 [ext_resource type="Script" uid="uid://ci074mwrbspx" path="res://scripts/Game.cs" id="1_3825q"]
-[ext_resource type="PackedScene" uid="uid://dcdquivdxnwpf" path="res://david.tscn" id="1_o6was"]
-[ext_resource type="PackedScene" uid="uid://dmuncf67xubb3" path="res://liam.tscn" id="2_cneqi"]
+[ext_resource type="PackedScene" uid="uid://dmuncf67xubb3" path="res://content/characters/character.liam.tscn" id="2_cneqi"]
+[ext_resource type="Script" uid="uid://cpfdrcrjwatdn" path="res://scripts/Player.cs" id="3_272bh"]
+[ext_resource type="PackedScene" uid="uid://b7ntx4i82q2ya" path="res://models/people/David.blend" id="4_5vw27"]
 [ext_resource type="Script" uid="uid://dfan2q1shg80g" path="res://scripts/networking/NetworkManager.cs" id="4_cc7sn"]
 [ext_resource type="PackedScene" uid="uid://n0wb5i1cdyte" path="res://map.tscn" id="4_nnxfy"]
 [ext_resource type="Script" uid="uid://csac5vnh0g4cf" path="res://scripts/MainMenu.cs" id="5_vftjj"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_f4dmj"]
+radius = 0.142789
+height = 1.26732
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_w716f"]
+size = Vector3(1, 0.893738, 1.15987)
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_gfkk5"]
+animation = &"Idle"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_ojsw1"]
+animation = &"Jump"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_fwoqc"]
+animation = &"Fall"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_oslmt"]
+animation = &"Idle"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_ssp14"]
+animation = &"Idle"
+
+[sub_resource type="AnimationNodeBlend2" id="AnimationNodeBlend2_pxdqd"]
+filter_enabled = true
+filters = ["David", "David/Skeleton3D:foot.L", "David/Skeleton3D:foot.R", "David/Skeleton3D:heel.02.R", "David/Skeleton3D:shin.L", "David/Skeleton3D:shin.R", "David/Skeleton3D:thigh.L", "David/Skeleton3D:thigh.R", "David/Skeleton3D:toe.L", "David/Skeleton3D:toe.R", "Liam", "Liam/Skeleton3D:foot.L", "Liam/Skeleton3D:foot.R", "Liam/Skeleton3D:heel.02.R", "Liam/Skeleton3D:shin.L", "Liam/Skeleton3D:shin.R", "Liam/Skeleton3D:thigh.L", "Liam/Skeleton3D:thigh.R", "Liam/Skeleton3D:toe.L", "Liam/Skeleton3D:toe.R"]
+
+[sub_resource type="AnimationNodeOneShot" id="AnimationNodeOneShot_m5tl0"]
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_4ov43"]
+animation = &"Normal"
+
+[sub_resource type="AnimationNodeBlend2" id="AnimationNodeBlend2_p5y8o"]
+
+[sub_resource type="AnimationNodeOneShot" id="AnimationNodeOneShot_lkd73"]
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_fnh4v"]
+animation = &"Special"
+
+[sub_resource type="AnimationNodeBlend2" id="AnimationNodeBlend2_v03vh"]
+
+[sub_resource type="AnimationNodeOneShot" id="AnimationNodeOneShot_m3g5d"]
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_xynbp"]
+animation = &"Walk"
+
+[sub_resource type="AnimationNodeBlend2" id="AnimationNodeBlend2_lqxid"]
+filter_enabled = true
+filters = ["David/Skeleton3D:foot.L", "David/Skeleton3D:foot.R", "David/Skeleton3D:heel.02.R", "David/Skeleton3D:shin.L", "David/Skeleton3D:shin.R", "David/Skeleton3D:thigh.L", "David/Skeleton3D:thigh.R", "David/Skeleton3D:toe.L", "David/Skeleton3D:toe.R", "Liam", "Liam/Skeleton3D:foot.L", "Liam/Skeleton3D:foot.R", "Liam/Skeleton3D:heel.02.R", "Liam/Skeleton3D:shin.L", "Liam/Skeleton3D:shin.R", "Liam/Skeleton3D:thigh.L", "Liam/Skeleton3D:thigh.R", "Liam/Skeleton3D:toe.L", "Liam/Skeleton3D:toe.R"]
+
+[sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_btbnq"]
+graph_offset = Vector2(-120.391, -29.7542)
+nodes/Animation/node = SubResource("AnimationNodeAnimation_oslmt")
+nodes/Animation/position = Vector2(0, 373.333)
+"nodes/Animation 2/node" = SubResource("AnimationNodeAnimation_gfkk5")
+"nodes/Animation 2/position" = Vector2(480, 346.667)
+"nodes/Animation 3/node" = SubResource("AnimationNodeAnimation_ojsw1")
+"nodes/Animation 3/position" = Vector2(960, 506.667)
+"nodes/Animation 4/node" = SubResource("AnimationNodeAnimation_fwoqc")
+"nodes/Animation 4/position" = Vector2(960, 346.667)
+nodes/IdleAnimation/node = SubResource("AnimationNodeAnimation_ssp14")
+nodes/IdleAnimation/position = Vector2(53.3333, 80)
+nodes/JumpBlend/node = SubResource("AnimationNodeBlend2_pxdqd")
+nodes/JumpBlend/position = Vector2(1280, 53.3333)
+nodes/JumpOneShot/node = SubResource("AnimationNodeOneShot_m5tl0")
+nodes/JumpOneShot/position = Vector2(1146.67, 293.333)
+nodes/NormalAnimation/node = SubResource("AnimationNodeAnimation_4ov43")
+nodes/NormalAnimation/position = Vector2(0, 506.667)
+nodes/NormalBlend/node = SubResource("AnimationNodeBlend2_p5y8o")
+nodes/NormalBlend/position = Vector2(293.333, 53.3333)
+nodes/NormalOneShot/node = SubResource("AnimationNodeOneShot_lkd73")
+nodes/NormalOneShot/position = Vector2(266.667, 266.667)
+nodes/SpecialAnimation/node = SubResource("AnimationNodeAnimation_fnh4v")
+nodes/SpecialAnimation/position = Vector2(480, 480)
+nodes/SpecialBlend/node = SubResource("AnimationNodeBlend2_v03vh")
+nodes/SpecialBlend/position = Vector2(506.667, 53.3333)
+nodes/SpecialOneShot/node = SubResource("AnimationNodeOneShot_m3g5d")
+nodes/SpecialOneShot/position = Vector2(666.667, 266.667)
+nodes/WalkAnimation/node = SubResource("AnimationNodeAnimation_xynbp")
+nodes/WalkAnimation/position = Vector2(853.333, 186.667)
+nodes/WalkBlend/node = SubResource("AnimationNodeBlend2_lqxid")
+nodes/WalkBlend/position = Vector2(1066.67, 53.3333)
+nodes/output/position = Vector2(1493.33, 80)
+node_connections = [&"JumpBlend", 0, &"WalkBlend", &"JumpBlend", 1, &"JumpOneShot", &"JumpOneShot", 0, &"Animation 4", &"JumpOneShot", 1, &"Animation 3", &"NormalBlend", 0, &"IdleAnimation", &"NormalBlend", 1, &"NormalOneShot", &"NormalOneShot", 0, &"Animation", &"NormalOneShot", 1, &"NormalAnimation", &"SpecialBlend", 0, &"NormalBlend", &"SpecialBlend", 1, &"SpecialOneShot", &"SpecialOneShot", 0, &"Animation 2", &"SpecialOneShot", 1, &"SpecialAnimation", &"WalkBlend", 0, &"SpecialBlend", &"WalkBlend", 1, &"WalkAnimation", &"output", 0, &"JumpBlend"]
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_kf1pn"]
+animation = &"left"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_titgg"]
+animation = &"right"
+
+[sub_resource type="AnimationNodeBlendSpace1D" id="AnimationNodeBlendSpace1D_h1nqm"]
+blend_point_0/node = SubResource("AnimationNodeAnimation_kf1pn")
+blend_point_0/pos = -1.0
+blend_point_1/node = SubResource("AnimationNodeAnimation_titgg")
+blend_point_1/pos = 1.0
+
+[sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_cmde2"]
+nodes/TurnBlendSpace/node = SubResource("AnimationNodeBlendSpace1D_h1nqm")
+nodes/TurnBlendSpace/position = Vector2(26.6667, 133.333)
+node_connections = [&"output", 0, &"TurnBlendSpace"]
+
+[sub_resource type="Resource" id="Resource_kek77"]
+metadata/__load_path__ = "res://david_attacks.tres"
+
+[sub_resource type="PackedScene" id="PackedScene_4c57u"]
+_bundled = {
+"conn_count": 0,
+"conns": PackedInt32Array(),
+"editable_instances": [NodePath("Model")],
+"names": PackedStringArray("David", "CharacterBody3D", "collision_layer", "axis_lock_linear_x", "script", "Speed", "Gravity", "Jump", "Model", "David", "transform", "Skeleton3D", "bones/1/rotation", "bones/2/rotation", "bones/3/rotation", "bones/4/rotation", "bones/5/rotation", "bones/6/rotation", "bones/7/rotation", "bones/7/scale", "bones/9/rotation", "bones/10/rotation", "bones/10/scale", "bones/11/rotation", "bones/11/scale", "bones/12/rotation", "bones/12/scale", "bones/14/rotation", "bones/15/rotation", "bones/15/scale", "bones/16/rotation", "bones/16/scale", "bones/17/rotation", "bones/17/scale", "bones/19/rotation", "bones/21/rotation", "bones/23/rotation", "bones/25/rotation", "bones/25/scale", "bones/27/rotation", "bones/27/scale", "bones/28/rotation", "bones/28/scale", "bones/29/rotation", "bones/29/scale", "bones/30/rotation", "bones/30/scale", "bones/34/rotation", "bones/35/rotation", "bones/35/scale", "bones/36/rotation", "bones/37/rotation", "bones/37/scale", "bones/39/rotation", "CollisionShape3D", "CollisionShape3D", "transform", "shape", "FlipOrigin", "Node3D", "AttackArea", "Area3D", "transform", "collision_layer", "collision_mask", "CollisionShape3D", "CollisionShape3D", "transform", "shape", "VisualAnimationTree", "AnimationTree", "root_node", "tree_root", "anim_player", "parameters/JumpBlend/blend_amount", "parameters/JumpOneShot/active", "parameters/JumpOneShot/internal_active", "parameters/JumpOneShot/request", "parameters/NormalBlend/blend_amount", "parameters/NormalOneShot/active", "parameters/NormalOneShot/internal_active", "parameters/NormalOneShot/request", "parameters/SpecialBlend/blend_amount", "parameters/SpecialOneShot/active", "parameters/SpecialOneShot/internal_active", "parameters/SpecialOneShot/request", "parameters/WalkBlend/blend_amount", "AnimationTree", "AnimationTree", "tree_root", "anim_player", "parameters/TurnBlendSpace/blend_position", "AnimationPlayer", "AnimationPlayer", "libraries"),
+"node_count": 11,
+"node_paths": [NodePath("."), NodePath("./Model"), NodePath("./Model/David"), NodePath("."), NodePath("."), NodePath("./FlipOrigin"), NodePath("./FlipOrigin/AttackArea"), NodePath("."), NodePath("."), NodePath(".")],
+"nodes": PackedInt32Array(-1, -1, 1, 0, -1, 6, 2, 0, 3, 1, 4, 2, 5, 3, 6, 4, 7, 5, 0, 1073741824, 0, 2147483647, 8, 6, 0, 0, 1073741825, -1, 2147483647, 262153, -1, 1, 10, 7, 0, 1073741826, -1, 2147483647, 262155, -1, 42, 12, 8, 13, 9, 14, 10, 15, 11, 16, 12, 17, 13, 18, 14, 19, 15, 20, 16, 21, 17, 22, 18, 23, 19, 24, 20, 25, 21, 26, 22, 27, 23, 28, 24, 29, 25, 30, 26, 31, 27, 32, 28, 33, 29, 34, 30, 35, 31, 36, 32, 37, 33, 38, 34, 39, 35, 40, 36, 41, 37, 42, 38, 43, 39, 44, 40, 45, 41, 46, 42, 47, 43, 48, 44, 49, 45, 50, 46, 51, 47, 52, 48, 53, 49, 0, 1073741827, 0, 55, 54, -1, 2, 56, 50, 57, 51, 0, 1073741828, 0, 59, 58, -1, 0, 0, 1073741829, 0, 61, 60, -1, 3, 62, 52, 63, 53, 64, 54, 0, 1073741830, 0, 66, 65, -1, 2, 67, 55, 68, 56, 0, 1073741831, 0, 70, 69, -1, 16, 71, 57, 72, 58, 73, 59, 74, 60, 75, 61, 76, 62, 77, 63, 78, 64, 79, 65, 80, 66, 81, 67, 82, 68, 83, 69, 84, 70, 85, 71, 86, 72, 0, 1073741832, 0, 88, 87, -1, 3, 89, 73, 90, 74, 91, 75, 0, 1073741833, 0, 93, 92, -1, 1, 94, 76, 0),
+"variants": [3, true, ExtResource("3_272bh"), 3.0, 30.0, 12.0, ExtResource("4_5vw27"), Transform3D(0.994007, -0.00356762, -0.109266, 0.00712358, 0.999457, 0.0321708, 0.109092, -0.0327563, 0.993491, -0.0447191, -0.0760894, 0.147369), Quaternion(0.12582, 7.64228e-09, -2.66966e-09, 0.992053), Quaternion(0.0328918, -0.00875143, 0.0257896, 0.999088), Quaternion(-0.0234107, 0.0243752, -0.0156908, 0.999306), Quaternion(-0.0398692, 0.032385, 0.00268643, 0.998676), Quaternion(0.195892, -0.0254787, 0.0906042, 0.976098), Quaternion(-0.0266939, 0.00340944, -0.0930125, 0.995301), Quaternion(-0.0711378, -0.00433755, -0.0109227, 0.997397), Vector3(1, 1, 1), Quaternion(-0.557521, -0.403803, -0.305022, 0.658084), Quaternion(-0.448822, 0.786521, -0.338079, 0.256215), Vector3(1, 1, 1), Quaternion(-0.00100967, 0.0577963, -0.137523, 0.98881), Vector3(1, 1, 1), Quaternion(-0.112864, -0.136949, 0.109981, 0.977963), Vector3(1, 1, 1), Quaternion(-0.386123, 0.664575, 0.440599, 0.463813), Quaternion(0.162357, -0.466372, 0.489768, 0.718516), Vector3(1, 1, 1), Quaternion(0.193903, -0.0679577, -0.00364512, 0.978657), Vector3(1, 1, 1), Quaternion(-0.00328868, -0.161288, 0.00845896, 0.986866), Vector3(1, 1, 1), Quaternion(-3.74755e-08, 0.696936, 0.717133, -2.14853e-08), Quaternion(-3.74755e-08, 0.696936, 0.717133, -2.14853e-08), Quaternion(-0.152455, -0.793331, -0.285504, 0.515627), Quaternion(-0.152455, 0.793331, 0.285504, 0.515627), Vector3(1, 1, 1), Quaternion(0.918796, 0.195941, -0.295408, 0.173655), Vector3(1, 1, 1), Quaternion(0.682932, -0.0439152, -0.069376, 0.725853), Vector3(1, 1, 1), Quaternion(-0.504525, -0.06896, -0.113959, 0.85306), Vector3(1, 1, 1), Quaternion(0.0138323, 0.867877, -0.398313, 0.296554), Vector3(1, 1, 1), Quaternion(0.809001, -0.0804587, 0.0147301, 0.582089), Quaternion(0.552732, -0.125769, -0.0885397, 0.819042), Vector3(1, 1, 1), Quaternion(-0.571968, -0.00515852, -0.0816919, 0.816182), Quaternion(-0.0852487, 0.958407, -0.272198, 0.00986698), Vector3(1, 1, 1), Quaternion(-0.655843, 0.703499, -0.186642, -0.200308), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.630975, 0), SubResource("CapsuleShape3D_f4dmj"), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.646068, 0.458277), 0, 2, Transform3D(1, 3.81454e-12, 0, -3.81454e-12, 1, 8.72665e-05, 0, -8.72665e-05, 1, 0, -0.126347, 0.242042), SubResource("BoxShape3D_w716f"), NodePath("../Model"), SubResource("AnimationNodeBlendTree_btbnq"), NodePath("../Model/AnimationPlayer"), 0.0, false, false, 0, 0.0, false, false, 0, 0.0, false, false, 0, 0.0, SubResource("AnimationNodeBlendTree_cmde2"), NodePath("../AnimationPlayer"), 1.0, {
+"": SubResource("Resource_kek77")
+}],
+"version": 3
+}
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_1v7er"]
 
@@ -18,7 +138,7 @@ sky = SubResource("Sky_11iph")
 
 [node name="Main" type="Node3D"]
 script = ExtResource("1_3825q")
-Characters = [ExtResource("2_cneqi"), ExtResource("1_o6was")]
+Characters = [ExtResource("2_cneqi"), SubResource("PackedScene_4c57u")]
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(0.912077, 0.31377, -0.263938, 0, 0.643723, 0.765259, 0.410019, -0.697975, 0.587125, 0, 1.92892, 1.7353)
