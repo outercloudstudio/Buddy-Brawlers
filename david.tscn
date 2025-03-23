@@ -1,7 +1,7 @@
 [gd_scene load_steps=26 format=3 uid="uid://dcdquivdxnwpf"]
 
 [ext_resource type="PackedScene" uid="uid://b7ntx4i82q2ya" path="res://models/people/David.blend" id="1_8fhee"]
-[ext_resource type="Script" path="res://scripts/Player.cs" id="1_jmk4b"]
+[ext_resource type="Script" uid="uid://cpfdrcrjwatdn" path="res://scripts/Player.cs" id="1_jmk4b"]
 [ext_resource type="AnimationLibrary" uid="uid://dcmmtsqcyos56" path="res://david_attacks.tres" id="3_t2o5g"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_f4dmj"]

@@ -1,6 +1,6 @@
 [gd_scene load_steps=26 format=3 uid="uid://dmuncf67xubb3"]
 
-[ext_resource type="Script" path="res://scripts/Player.cs" id="1_cu7h1"]
+[ext_resource type="Script" uid="uid://cpfdrcrjwatdn" path="res://scripts/Player.cs" id="1_cu7h1"]
 [ext_resource type="PackedScene" uid="uid://dlk3iwvpb8uav" path="res://models/people/Liam.blend" id="3_jwaj7"]
 [ext_resource type="AnimationLibrary" uid="uid://d25yf0xrirpxo" path="res://liam_attacks.tres" id="3_qryua"]
 
