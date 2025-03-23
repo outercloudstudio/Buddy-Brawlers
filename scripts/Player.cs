@@ -1,7 +1,6 @@
 using Godot;
 using Networking;
 using Riptide;
-using System;
 
 public partial class Player : CharacterBody3D, NetworkPointUser
 {
@@ -16,10 +15,6 @@ public partial class Player : CharacterBody3D, NetworkPointUser
 	private NetworkedVariable<float> _networkedMovement = new NetworkedVariable<float>(0);
 
 	private float _yVelocity;
-	private Node3D _model;
-	private AnimationTree _visualAnimationTree;
-	private AnimationTree _animationTree;
-	private AnimationPlayer _animationPlayer;
 	private Node3D _flipOrigin;
 	private Area3D _attackArea;
 	private Vector3 _knockback;
@@ -28,10 +23,6 @@ public partial class Player : CharacterBody3D, NetworkPointUser
 
 	public override void _Ready()
 	{
-		_model = GetNode<Node3D>("Model");
-		_visualAnimationTree = GetNode<AnimationTree>("VisualAnimationTree");
-		_animationTree = GetNode<AnimationTree>("AnimationTree");
-		_animationPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
 		_flipOrigin = GetNode<Node3D>("FlipOrigin");
 		_attackArea = _flipOrigin.GetNode<Area3D>("AttackArea");
 
@@ -56,7 +47,7 @@ public partial class Player : CharacterBody3D, NetworkPointUser
 
 	public override void _Process(double delta)
 	{
-		UpdateAnimationTree((float)delta);
+
 	}
 
 	public override void _PhysicsProcess(double delta)
@@ -70,8 +61,6 @@ public partial class Player : CharacterBody3D, NetworkPointUser
 		if (IsOnFloor() && Input.IsActionPressed("up"))
 		{
 			_yVelocity = Jump;
-
-			_visualAnimationTree.Set("parameters/JumpOneShot/request", (int)AnimationNodeOneShot.OneShotRequest.Fire);
 		}
 
 		_networkedPosition.Sync();
@@ -116,16 +105,6 @@ public partial class Player : CharacterBody3D, NetworkPointUser
 		});
 	}
 
-	private void UpdateAnimationTree(float delta)
-	{
-		_visualAnimationTree.Set("parameters/WalkBlend/blend_amount", MathHelper.FixedLerp((float)_visualAnimationTree.Get("parameters/WalkBlend/blend_amount"), _movement != 0 ? 1 : 0, 8f, delta));
-		_visualAnimationTree.Set("parameters/NormalBlend/blend_amount", MathHelper.FixedLerp((float)_visualAnimationTree.Get("parameters/NormalBlend/blend_amount"), _animationPlayer.CurrentAnimation == "normal" && _animationPlayer.CurrentAnimationPosition > 0.1 && _animationPlayer.CurrentAnimationPosition < _animationPlayer.CurrentAnimationLength - 0.1 ? 1 : 0, 20f, delta));
-		_visualAnimationTree.Set("parameters/SpecialBlend/blend_amount", MathHelper.FixedLerp((float)_visualAnimationTree.Get("parameters/SpecialBlend/blend_amount"), _animationPlayer.CurrentAnimation == "special" && _animationPlayer.CurrentAnimationPosition > 0.1 && _animationPlayer.CurrentAnimationPosition < _animationPlayer.CurrentAnimationLength - 0.1 ? 1 : 0, 20f, delta));
-		_visualAnimationTree.Set("parameters/JumpBlend/blend_amount", MathHelper.FixedLerp((float)_visualAnimationTree.Get("parameters/JumpBlend/blend_amount"), !IsOnFloor() ? 1 : 0, 20f, delta));
-
-		_animationTree.Set("parameters/TurnBlendSpace/blend_position", MathHelper.FixedLerp((float)_animationTree.Get("parameters/TurnBlendSpace/blend_position"), _lastMovedRight ? 1 : -1, 12f, delta));
-	}
-
 	public virtual void TriggerNormalAttack()
 	{
 		var bodies = _attackArea.GetOverlappingBodies();
@@ -168,32 +147,22 @@ public partial class Player : CharacterBody3D, NetworkPointUser
 
 	private void NormalAttack()
 	{
-		if (_animationPlayer.IsPlaying()) return;
-
 		NetworkPoint.BounceRpcToClientsFast(nameof(NormalAttackRpc));
 	}
 
 	private void SpecialAttack()
 	{
-		if (_animationPlayer.IsPlaying()) return;
-
 		NetworkPoint.BounceRpcToClientsFast(nameof(SpecialAttackRpc));
 	}
 
 	private void NormalAttackRpc(Message message)
 	{
-		_visualAnimationTree.Set("parameters/NormalOneShot/request", (int)AnimationNodeOneShot.OneShotRequest.Fire);
 
-		_animationPlayer.Stop();
-		_animationPlayer.Play("normal");
 	}
 
 	private void SpecialAttackRpc(Message message)
 	{
-		_visualAnimationTree.Set("parameters/SpecialOneShot/request", (int)AnimationNodeOneShot.OneShotRequest.Fire);
 
-		_animationPlayer.Stop();
-		_animationPlayer.Play("special");
 	}
 
 	private void DamageRpc(Message message)

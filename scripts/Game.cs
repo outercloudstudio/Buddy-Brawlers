@@ -36,6 +36,8 @@ public partial class Game : Node3D, NetworkPointUser
 			{
 				if (!NetworkManager.IsHost) return;
 
+				if (OS.HasFeature("start")) Start();
+
 				if (NetworkManager.LocalServer.ClientCount != 2) return;
 
 				Start();
