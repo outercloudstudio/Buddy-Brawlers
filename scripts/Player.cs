@@ -5,7 +5,8 @@ using Riptide;
 public partial class Player : CharacterBody3D, NetworkPointUser
 {
 	[Export] public float Speed = 10f;
-	[Export] public float Gravity = 4;
+	[Export] public float RisingGravity = 30;
+	[Export] public float FallingGravity = 60;
 	[Export] public float Jump = 4;
 
 	public NetworkPoint NetworkPoint { get; set; } = new NetworkPoint();
@@ -15,17 +16,12 @@ public partial class Player : CharacterBody3D, NetworkPointUser
 	private NetworkedVariable<float> _networkedMovement = new NetworkedVariable<float>(0);
 
 	private float _yVelocity;
-	private Node3D _flipOrigin;
-	private Area3D _attackArea;
 	private Vector3 _knockback;
 	private float _movement;
 	private bool _lastMovedRight = true;
 
 	public override void _Ready()
 	{
-		_flipOrigin = GetNode<Node3D>("FlipOrigin");
-		_attackArea = _flipOrigin.GetNode<Area3D>("AttackArea");
-
 		NetworkPoint.Setup(this);
 
 		NetworkPoint.Register(nameof(_networkedPosition), _networkedPosition);
@@ -52,9 +48,11 @@ public partial class Player : CharacterBody3D, NetworkPointUser
 
 	public override void _PhysicsProcess(double delta)
 	{
-		_yVelocity -= Gravity * (float)delta;
+		_yVelocity -= (_yVelocity > 0 ? RisingGravity : FallingGravity) * (float)delta;
 
 		_knockback = MathHelper.FixedLerp(_knockback, Vector3.Zero, 4f, (float)delta);
+
+		if (IsOnCeiling() && _yVelocity > 0) _yVelocity = 0;
 
 		if (IsOnFloor() && _yVelocity < 0) _yVelocity = 0;
 
@@ -90,8 +88,6 @@ public partial class Player : CharacterBody3D, NetworkPointUser
 		}
 
 		if (_movement != 0) _lastMovedRight = _movement < 0;
-
-		_flipOrigin.Scale = new Vector3(1, 1, _lastMovedRight ? 1 : -1);
 	}
 
 	public void Damage(Vector3 knockback, float lift)
@@ -107,42 +103,42 @@ public partial class Player : CharacterBody3D, NetworkPointUser
 
 	public virtual void TriggerNormalAttack()
 	{
-		var bodies = _attackArea.GetOverlappingBodies();
+		// var bodies = _attackArea.GetOverlappingBodies();
 
-		foreach (Node body in bodies)
-		{
-			if (body == this) continue;
+		// foreach (Node body in bodies)
+		// {
+		// 	if (body == this) continue;
 
-			if (!(body is Player otherPlayer)) continue;
+		// 	if (!(body is Player otherPlayer)) continue;
 
-			Vector3 playerOffset = otherPlayer.GlobalPosition - GlobalPosition;
-			playerOffset.Y = 0;
-			playerOffset.X = 0;
+		// 	Vector3 playerOffset = otherPlayer.GlobalPosition - GlobalPosition;
+		// 	playerOffset.Y = 0;
+		// 	playerOffset.X = 0;
 
-			playerOffset = playerOffset.Normalized();
+		// 	playerOffset = playerOffset.Normalized();
 
-			otherPlayer.Damage(playerOffset * 7f + Vector3.Up * 5f, 7f);
-		}
+		// 	otherPlayer.Damage(playerOffset * 7f + Vector3.Up * 5f, 7f);
+		// }
 	}
 
 	public virtual void TriggerSpecialAttack()
 	{
-		var bodies = _attackArea.GetOverlappingBodies();
+		// var bodies = _attackArea.GetOverlappingBodies();
 
-		foreach (Node body in bodies)
-		{
-			if (body == this) continue;
+		// foreach (Node body in bodies)
+		// {
+		// 	if (body == this) continue;
 
-			if (!(body is Player otherPlayer)) continue;
+		// 	if (!(body is Player otherPlayer)) continue;
 
-			Vector3 playerOffset = otherPlayer.GlobalPosition - GlobalPosition;
-			playerOffset.Y = 0;
-			playerOffset.X = 0;
+		// 	Vector3 playerOffset = otherPlayer.GlobalPosition - GlobalPosition;
+		// 	playerOffset.Y = 0;
+		// 	playerOffset.X = 0;
 
-			playerOffset = playerOffset.Normalized();
+		// 	playerOffset = playerOffset.Normalized();
 
-			otherPlayer.Damage(playerOffset * 7f, 7f);
-		}
+		// 	otherPlayer.Damage(playerOffset * 7f, 7f);
+		// }
 	}
 
 	private void NormalAttack()

@@ -1,11 +1,8 @@
-[gd_scene load_steps=5 format=3 uid="uid://dmuncf67xubb3"]
+[gd_scene load_steps=4 format=3 uid="uid://dmuncf67xubb3"]
 
 [ext_resource type="Script" uid="uid://cpfdrcrjwatdn" path="res://scripts/Player.cs" id="1_cu7h1"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_kk6o1"]
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_fcvu3"]
-size = Vector3(1, 0.893738, 0.933258)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_00t0l"]
 size = Vector3(0.460938, 1.22498, 0.506836)
@@ -14,9 +11,10 @@ size = Vector3(0.460938, 1.22498, 0.506836)
 collision_layer = 3
 axis_lock_linear_x = true
 script = ExtResource("1_cu7h1")
-Speed = 4.0
-Gravity = 30.0
-Jump = 10.0
+Speed = 5.0
+RisingGravity = 50.0
+FallingGravity = 80.0
+Jump = 12.0
 
 [node name="Visuals" type="Node3D" parent="."]
 
@@ -24,17 +22,6 @@ Jump = 10.0
 transform = Transform3D(0.471623, 0, 0, 0, 1.22538, 0, 0, 0, 0.527065, 0, 0.640224, 0)
 mesh = SubResource("BoxMesh_kk6o1")
 skeleton = NodePath("../..")
-
-[node name="FlipOrigin" type="Node3D" parent="."]
-
-[node name="AttackArea" type="Area3D" parent="FlipOrigin"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.646068, 0.458277)
-collision_layer = 0
-collision_mask = 2
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="FlipOrigin/AttackArea"]
-transform = Transform3D(1, 3.81454e-12, 0, -3.81454e-12, 1, 8.72665e-05, 0, -8.72665e-05, 1, 0, -0.126357, 0.128738)
-shape = SubResource("BoxShape3D_fcvu3")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.634216, 0)
