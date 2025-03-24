@@ -19,6 +19,9 @@ public partial class Player : CharacterBody3D, NetworkPointUser
 	private Vector3 _knockback;
 	private float _movement;
 
+	private float _groundedTimer = 0;
+	private float _jumpedTimer = 0;
+
 	public override void _Ready()
 	{
 		NetworkPoint.Setup(this);
@@ -67,7 +70,13 @@ public partial class Player : CharacterBody3D, NetworkPointUser
 
 		if (IsOnFloor() && _yVelocity < 0) _yVelocity = 0;
 
-		if (IsOnFloor() && Input.IsActionPressed("up"))
+		_groundedTimer -= (float)delta;
+		_jumpedTimer -= (float)delta;
+
+		if (IsOnFloor()) _groundedTimer = 0.1f;
+		if (Input.IsActionPressed("up")) _jumpedTimer = 0.05f;
+
+		if (_groundedTimer > 0 && _jumpedTimer > 0)
 		{
 			_yVelocity = Jump;
 		}
