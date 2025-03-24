@@ -18,7 +18,6 @@ public partial class Player : CharacterBody3D, NetworkPointUser
 	private float _yVelocity;
 	private Vector3 _knockback;
 	private float _movement;
-	private bool _lastMovedRight = true;
 
 	public override void _Ready()
 	{
@@ -48,6 +47,18 @@ public partial class Player : CharacterBody3D, NetworkPointUser
 
 	public override void _PhysicsProcess(double delta)
 	{
+		if (!NetworkPoint.IsOwner)
+		{
+			GlobalPosition = GlobalPosition.Lerp(_networkedPosition.Value, (float)delta * 20.0f);
+			Velocity = _networkedVelocity.Value;
+
+			_movement = _networkedMovement.Value;
+
+			MoveAndSlide();
+
+			return;
+		}
+
 		_yVelocity -= (_yVelocity > 0 ? RisingGravity : FallingGravity) * (float)delta;
 
 		_knockback = MathHelper.FixedLerp(_knockback, Vector3.Zero, 4f, (float)delta);
@@ -61,33 +72,19 @@ public partial class Player : CharacterBody3D, NetworkPointUser
 			_yVelocity = Jump;
 		}
 
+		_movement = Input.GetAxis("right", "left");
+
+		Velocity = Vector3.Forward * _movement * Speed + Vector3.Up * _yVelocity + _knockback;
+
+		MoveAndSlide();
+
+		_networkedPosition.Value = GlobalPosition;
+		_networkedVelocity.Value = Velocity;
+		_networkedMovement.Value = _movement;
+
 		_networkedPosition.Sync();
 		_networkedVelocity.Sync();
 		_networkedMovement.Sync();
-
-		_movement = Input.GetAxis("right", "left");
-
-		if (NetworkPoint.IsOwner)
-		{
-			Velocity = Vector3.Forward * _movement * Speed + Vector3.Up * _yVelocity + _knockback;
-
-			MoveAndSlide();
-
-			_networkedPosition.Value = GlobalPosition;
-			_networkedVelocity.Value = Velocity;
-			_networkedMovement.Value = _movement;
-		}
-		else
-		{
-			GlobalPosition = GlobalPosition.Lerp(_networkedPosition.Value, (float)delta * 20.0f);
-			Velocity = _networkedVelocity.Value;
-
-			_movement = _networkedMovement.Value;
-
-			MoveAndSlide();
-		}
-
-		if (_movement != 0) _lastMovedRight = _movement < 0;
 	}
 
 	public void Damage(Vector3 knockback, float lift)
